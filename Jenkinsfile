@@ -8,7 +8,7 @@ podTemplate(containers: [
   ]) {
     node(POD_LABEL) {
       stage('Run pipeline against a gradle project - test MAIN') {
-	container('gradle') {
+	          container('gradle') {
           stage('Build a gradle project') {
             echo "I am the ${env.BRANCH_NAME} branch"
           }
@@ -20,6 +20,16 @@ podTemplate(containers: [
             }
           }
         }
-      }   
+      }  
+      stage('cat readme') {
+        when {
+          branch "feature"
+        }
+        steps {
+          sh '''
+            cat readme.txt
+          '''
+        }
+      } 
     }
 }
